@@ -1,0 +1,356 @@
+{
+    "OutputFolder": "C:\\Wallpaper\\Slideshow",
+    "TimeBetweenCreation": 58,
+    "NumberThreads": 6,
+    "AutoMultiThread": false,
+    "PauseOnProcess": ["powerpnt","steam"],
+    "SourceFolderGroups":
+    [
+        {
+            "SourceFolderGroup": 1,
+            "Description": "Default folder, this folder should be a local disk and online at all times",
+            "SourceFolders": 
+            [
+                {"Folder": "C:\\LocalDriveFolder\\Pictures\\", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 2,
+            "Description": "Mixed Portrait and Landscape images",
+            "SourceFolders": 
+            [
+                {"Folder": "D:\\Pictures\\Vacations\\March-14-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "D:\\Pictures\\Vacations\\March-15-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "D:\\Pictures\\Vacations\\March-16-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 3,
+            "Description": "More Mixed Portrait and Landscape images",
+            "SourceFolders": 
+            [
+                {"Folder": "E:\\Pictures\\Art\\VincentvanGogh", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": true},
+                {"Folder": "E:\\Pictures\\Art\\PaulGauguin", "Weight": 15,"ZoomPercent": 130,"RandomFlipHorizontal": true},
+                {"Folder": "E:\\Pictures\\Art\\GeorgesSeurat", "Weight": 5,"ZoomPercent": 110,"RandomFlipHorizontal": true}
+            ]
+        },
+        {
+            "SourceFolderGroup": 4,
+            "Description": "Portrait images",
+            "SourceFolders": 
+            [
+                {"Folder": "F:\\Graduations\\Hillary", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "F:\\Graduations\\GeorgeW", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "F:\\Graduations\\Donald", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "F:\\Graduations\\Barack", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 5,
+            "Description": "More Portrait images",
+            "SourceFolders": 
+            [
+                {"Folder": "D:\\Weddings\\JackAndJill", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "D:\\Weddings\\DonaldAndHillary", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 6,
+            "Description": "Narrow Portrait cellphone images",
+            "SourceFolders": 
+            [
+                {"Folder": "E:\\iPhone\\iCloudLocal", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "E:\\Android\\GingerBread", "Weight": 1,"ZoomPercent": 120,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 7,
+            "Description": "Landscape images",
+            "SourceFolders": 
+            [
+                {"Folder": "X:\\Photography\\YellowStone", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "X:\\Photography\\Olympic", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "X:\\Photography\\Carlsbad", "Weight": 10,"ZoomPercent": 130,"RandomFlipHorizontal": false},
+                {"Folder": "X:\\Photography\\Yosemite", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "X:\\Photography\\Glacier", "Weight": 10,"ZoomPercent": 150,"RandomFlipHorizontal": false}
+            ]
+        },
+        {
+            "SourceFolderGroup": 8,
+            "Description": "Magazine aspect ratio Portrait images",
+            "SourceFolders": 
+            [
+                {"Folder": "D:\\NationalGeographic\\1969_Dec", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false},
+                {"Folder": "D:\\NationalGeographic\\1970_Jan", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+            ]
+        }
+    ],
+    "Notes_SourceFolderGroupSetsNote_1": "Group together 1 or more SourceFolderGroup (above) to form a 'SourceFolderGroupSet.'",
+    "Notes_SourceFolderGroupSetsNote_2": "SourceFolderGroupSet values must be a unique integer within the SourceFolderGroupSets list.",
+    "Notes_SourceFolderGroupSetsNote_3": "One or more SourceFolderGroupSets may be applied to each GroupName in WallpaperLayoutWeightedList (below).",
+    "SourceFolderGroupSets":
+    [
+        {
+            "SourceFolderGroups": [1], "Note2": "Default SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 100, "Note1": "Use this SourceFolderGroupSet number in the 'Default' WallpaperLayoutWeightedList GroupName, BELOW.  Must be a unique integer."
+        },
+        {
+            "SourceFolderGroups": [2,3], "Note2": "Mixed Portrait and Landscape image SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 101, "Note1": "Use SourceFolderGroupSet number(s) in Mixed WallpaperLayoutWeightedList WallpaperLayout, BELOW.  Must be a unique integer."
+        },
+        {
+            "SourceFolderGroups": [4,5], "Note2": "Portrait image SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 102, "Note1": "Use SourceFolderGroupSet number(s) in Portrait WallpaperLayoutWeightedList WallpaperLayout, BELOW.  Must be a unique integer."
+        },
+        {
+            "SourceFolderGroups": [6], "Note2": "Narrow cellphone Portrait image SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 103, "Note1": "Use SourceFolderGroupSet number(s) in narrow Portrait WallpaperLayoutWeightedList WallpaperLayout, BELOW.  Must be a unique integer."
+        },
+        {
+            "SourceFolderGroups": [7], "Note2": "Landscape image SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 104, "Note1": "Use SourceFolderGroupSet number(s) in Landscape WallpaperLayoutWeightedList WallpaperLayout, BELOW.  Must be a unique integer."
+        },
+        {
+            "SourceFolderGroups": [8], "Note2": "Magazine, 8 in. wide x 11 in. tall, SourceFolderGroup list(s), from ABOVE",
+            "SourceFolderGroupSet": 105, "Note1": "Use SourceFolderGroupSet number(s) in the Magazine WallpaperLayoutWeightedList WallpaperLayout, BELOW.  Must be a unique integer."
+        }
+    ],
+    "WallpaperLayoutWeightedList":
+    [
+        {
+            "GroupName": "Default",
+            "Notes_GroupName_Default": "Default GroupName is only used if all other GroupNames are offline.  Do not change the GroupName from 'Default'",
+            "WallpaperLayout": "Landscape_1_Base6Thirds",
+            "Weight": 1,
+            "SourceFolderGroupSets": [100],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": false,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Landscape_1_Base6Thirds",
+            "WallpaperLayout": "Landscape_1_Base6Thirds",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Landscape_2_Elements_Thirds",
+            "WallpaperLayout": "Landscape_2_Elements_Thirds",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Landscape_3_Elements_Base3",
+            "WallpaperLayout": "Landscape_3_Elements_Base3",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Portrait_1_2x2_3x3",
+            "WallpaperLayout": "Portrait_1_2x2_3x3",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Portrait_2_NarrowThirds",
+            "WallpaperLayout": "Portrait_2_NarrowThirds",
+            "Weight": 1,
+            "SourceFolderGroupSets": [103],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Portrait_3_Elements_Base3_Narrow",
+            "WallpaperLayout": "Portrait_3_Elements_Base3_Narrow",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Portrait_3_Elements_Base3_Even",
+            "WallpaperLayout": "Portrait_3_Elements_Base3_Even",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Mixed_1_6xElements_Base6Thirds_15Px6L",
+            "WallpaperLayout": "Mixed_1_6xElements_Base6Thirds_15Px6L",
+            "Weight": 1,
+            "SourceFolderGroupSets": [101,102],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Mixed_2_Thirds",
+            "WallpaperLayout": "Mixed_2_Thirds",
+            "Weight": 1,
+            "SourceFolderGroupSets": [101,102],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Mixed_3_Element_Base3",
+            "WallpaperLayout": "Mixed_3_Element_Base3",
+            "Weight": 1,
+            "SourceFolderGroupSets": [101,102],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Mixed_4_LargeLandscape",
+            "WallpaperLayout": "Mixed_4_LargeLandscape",
+            "Weight": 1,
+            "SourceFolderGroupSets": [101,102],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        },
+        {
+            "GroupName": "Magazine",
+            "WallpaperLayout": "Magazine",
+            "Weight": 1,
+            "SourceFolderGroupSets": [],
+            "SplitGroupOnSourceFolderGroupSets": true,
+            "SplitGroupOnSourceFolder": true,
+            "IncludeSubdirectories": true,
+            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
+            "ZoomPercent": 100,
+            "RandomFlipHorizontal": false,
+            "AlphaNumeric": false,
+            "RandomSequence": false,
+            "Portrait_Landscape_SurplusBurnoff": true,
+            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
+        }
+    ]
+}
