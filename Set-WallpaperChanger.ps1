@@ -36,10 +36,6 @@ InputsFile.json Parameters:
 		- Should be the same (or 1-2 less) as the Windows slideshow interval (see below).
 		- Note that large image files and complex layouts may take 60+ seconds to create.  If so, and duplicate slideshow Windows backgrounds are a regular occurrence, consider using NumberThreads (below). 
 
-	PauseOnProcess 
-		- List of Windows processes which will pause Wallpaper image creation, as defined by "Get-Process | Select-Object ProcessName -Unique" (PowerShell).
-		- E.g. ["powerpnt","steam"] to conserve CPU while presenting or playing games.
-
 	NumberThreads
         - Requires PowerShell 7 or higher:  https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.1-win-x64.msi
 		- Number of parallel threads, each of which will update its own Wallpaper image file.
@@ -52,7 +48,21 @@ InputsFile.json Parameters:
 		- If NumberThreads is set to 1 and AutoMultiThread is "true," threads will automatically be increased and decreased if creation time is exceeding TimeBetweenCreation
 		- Not recommended, consider using NumberThreads for more consistent behavior.
 
-	SourceFolderGroups (InputsFile.json property):
+	IncludeRecurseSubdirectoriesTagFile 
+		- Only include folders (and their subdirectories) which include the IncludeRecurseSubdirectoriesTagFile file (e.g. WP.include file (empty)).
+		- Not required, if a IncludeRecurseSubdirectoriesTagFile file does not exist, the entire SourceFolder and subdirectories will be included by default.
+		- However, once a IncludeRecurseSubdirectoriesTagFile is included in one or more folders, all other parallel folders/subdirectory chains will be excluded.
+
+	ExcludeRecurseSubdirectoriesTagFile 
+		- Exclude folders (and their subdirectories) which include the ExcludeRecurseSubdirectoriesTagFile file (e.g. WP.exclude file (empty)).
+		- May also be used to prune (exclude) subdirectories of IncludeRecurseSubdirectoriesTagFile parent folders.	
+
+	PauseOnProcess 
+		- List of Windows processes which will pause Wallpaper image creation, as defined by "Get-Process | Select-Object ProcessName -Unique" (PowerShell).
+		- E.g. ["powerpnt","steam"] to conserve CPU while presenting or playing games.
+
+    
+    SourceFolderGroups (InputsFile.json property):
 	
 		Description - Cosmetic value, may be updated freely.
 		
@@ -64,11 +74,28 @@ InputsFile.json Parameters:
 			- Should be unique, but will be deduplicated in either case.
 			- Weight, ZoomPercent, and RandomFlipHorizontal override settings here will only be used here if the WallpaperLayoutWeightedList GroupName is set to:
 			    SplitGroupOnSourceFolder = true (see below under section WallpaperLayoutWeightedList).
-			- Weight - Integer multiplier (1,2,3...) indicating how often a Folder should be represented.  
-			  For example, image files in Folders with a Weight of 10 will be displayed 10x as often as image files in a Folder with a Weight of 1.
-			- See notes on ZoomPercent and RandomFlipHorizontal below.
+			
+            Weight (SourceFolder override)
+                - Integer multiplier (1,2,3...) indicating how often a Folder should be represented.  
+			    - For example, image files in Folders with a Weight of 10 will be displayed 10x as often as image files in a Folder with a Weight of 1.
+			
+            ZoomPercent (SourceFolder override)
+                - See WallpaperLayoutWeightedList notes below (may be set more globally for a given GroupName)
 
-	SourceFolderGroupSets (InputsFile.json property):
+            RandomFlipHorizontal (SourceFolder override)
+                - See WallpaperLayoutWeightedList notes below (may be set more globally for a given GroupName)
+
+            SplitOnLeafFolder
+                - Split a parent SoureFolder into multiple picture-containing subdirectory SourceFolders with the longest paths, i.e. "LeafFolders".
+                - This setting is intended to create WallpaperImage files based on a single folder, rather than on an entire directory and subdirectory tree.
+                - Picture files contained within branch directories (upstream of longest-path picture-containing subdirectories) will not be included.
+                - NOTE that ExcludeRecurseSubdirectoriesTagFile (see above), meant to prune subdirectories (branches) of parent SourceFolders,
+                  will only be applied if set explicitly on LeafFolders. IncludeRecurseSubdirectoriesTagFile is enforced only if one (1) or more LeafFolders
+                  contain IncludeRecurseSubdirectoriesTagFile; otherwise, all LeafFolders will be included.
+                - Values of "true" or "false" (without quotes).
+
+	
+    SourceFolderGroupSets (InputsFile.json property):
 
 		SourceFolderGroups
 			- Group of 1 or more SourceFolderGroup integer identifiers (from above)
@@ -77,7 +104,8 @@ InputsFile.json Parameters:
 			- MUST be a unique integer identifier
 			- Used to associate SourceFolderGroups with WallpaperLayoutWeightedList GroupNames (below)
 
-	WallpaperLayoutWeightedList (InputsFile.json property):
+	
+    WallpaperLayoutWeightedList (InputsFile.json property):
 	
 		GroupName - Cosmetic name description for WallpaperLayout setting combinations, with the exception of the "Default" GroupName which should be preserved.
 		
@@ -103,15 +131,6 @@ InputsFile.json Parameters:
 
 		IncludeSubdirectories - Also include image files from all subdirectories (subfolders) of a given SourceFolder.
 
-		IncludeRecurseSubdirectoriesTagFile 
-			- Only include folders (and their subdirectories) which include the IncludeRecurseSubdirectoriesTagFile file (e.g. WP.include file (empty)).
-			- Not required, if a IncludeRecurseSubdirectoriesTagFile file does not exist, the entire SourceFolder and subdirectories will be included by default.
-			- However, once a IncludeRecurseSubdirectoriesTagFile is included in one or more folders, all other parallel folders/subdirectory chains will be excluded.
-
-		ExcludeRecurseSubdirectoriesTagFile 
-			- Exclude folders (and their subdirectories) which include the ExcludeRecurseSubdirectoriesTagFile file (e.g. WP.exclude file (empty)).
-			- May also be used to prune (exclude) subdirectories of IncludeRecurseSubdirectoriesTagFile parent folders.
-
 		ZoomPercent 
 			- Zooms in on the center of images, effectively cropping them.  Useful for photographers who chronically over-panoramaize photos, leaving the subject too small.
 			- Must be an integer value greater than or equal to 100.
@@ -135,6 +154,7 @@ InputsFile.json Parameters:
 
         SurplusCandidate_Landscape - Layout for burning off surplus Landscape images.  Recommend using "Landscape_2_Elements_Thirds"
 
+
 Windows Settings:
 
 	Wallpaper Refresh Time:
@@ -149,6 +169,7 @@ Windows Settings:
 		Updating this setting normally requires a logoff/logon or a reboot for the setting to take effect, but should also refresh by visiting:
 		
 			[Start] -> Settings -> Personalization -> Background
+
 
 Recommended Settings:
    
@@ -252,7 +273,6 @@ function Get-InputJsonFileData {
     
     # PowerShell cannot clone Integer values, copying will lead to access method issues when $DataHashtable is returned from function, we will convert back to [Int32] later
     if ($DataHashtable.PictureNameOverride) {$PictureNameOverride = ([string]$DataHashtable.PictureNameOverride).Clone()}
-    #if ($DataHashtable.NumberThreads -gt 1) {$NumberThreads = ([string]$DataHashtable.NumberThreads).Clone()}
     if ($DataHashtable.Thread) {$Thread = ([string]$DataHashtable.Thread).Clone()}
 
     $DataHashtable = @{}
@@ -297,7 +317,10 @@ function Get-InputJsonFileData {
         $void = New-Item -ItemType Directory -Path $DataHashtable.OutputFolder
     }
     
-    $DataHashtable.TimeBetweenCreation = [Int32]$InputsJsonObject.TimeBetweenCreation
+    [Int32]$DataHashtable.TimeBetweenCreation = $InputsJsonObject.TimeBetweenCreation
+    [array]$DataHashtable.PauseOnProcess = $InputsJsonObject.PauseOnProcess
+    [string]$DataHashtable.IncludeRecurseSubdirectoriesTagFile = $InputsJsonObject.IncludeRecurseSubdirectoriesTagFile
+    [string]$DataHashtable.ExcludeRecurseSubdirectoriesTagFile = $InputsJsonObject.ExcludeRecurseSubdirectoriesTagFile
     
     # Retain NumberThreads if AutoMultiThreadActive
     if ($NumberThreads -and ($InputsJsonObject.NumberThreads -lt 2))
@@ -309,9 +332,7 @@ function Get-InputJsonFileData {
         $DataHashtable.NumberThreads = [Int32](@([Int32]$InputsJsonObject.NumberThreads,6) | measure -Minimum).Minimum  # Maximum of 6 threads
         $DataHashtable.NumberThreads = [Int32](@($DataHashtable.NumberThreads,1) | measure -Maximum).Maximum  # Minimum of 1 thread
     }
-    
     $DataHashtable.AutoMultiThread = [System.Convert]::ToBoolean($InputsJsonObject.AutoMultiThread)
-    $DataHashtable.PauseOnProcess = [array]$InputsJsonObject.PauseOnProcess
         
     $DataHashtable.WallpaperLayoutWeightedList = @{}
     $SourceFolderGroupsObject = [PSCustomObject]$InputsJsonObject.SourceFolderGroups
@@ -344,8 +365,56 @@ function Get-InputJsonFileData {
                     {
                         $FolderItem.Folder = $FolderItem.Folder.Substring(0, $FolderItem.Folder.Length - 1)
                     }
-                
-                    $SourceFolderArray += $FolderItem
+
+                    if ($FolderItem.SplitOnLeafFolder)
+                    {
+                        [array]$LeafFolders = [System.Collections.Generic.List[string]]((Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique)
+
+                        foreach ($LeafFolder in $LeafFolders)
+                        {
+                            # Do not include branch Folders
+                            if ($LeafFolders -like "$($LeafFolder)\*")
+                            {
+                                continue
+                            }
+                            
+                            # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
+                            $FolderItemSerialized = ConvertTo-Json -InputObject $FolderItem
+                            $LeafFolderItem = ConvertFrom-Json -InputObject $FolderItemSerialized
+                            
+                            $LeafFolderItem.Folder = $LeafFolder
+                            
+                            [array]$SourceFolderArray += $LeafFolderItem
+                        }
+
+                        if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile)
+                        {
+                            # If one (1) or more LeafFolders contain IncludeRecurseSubdirectoriesTagFile, only include folders with IncludeRecurseSubdirectoriesTagFile; 
+                            # else, include all LeafFolders as the default
+
+                            if (Get-ChildItem -Path $FolderItem.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
+                            {
+                                $LeafFolderIncludeFileFolderArray = @()
+
+                                foreach ($LeafFolder in $SourceFolderArray)
+                                {
+                                    if (Get-ChildItem -Path $LeafFolder.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
+                                    {
+                                        [array]$LeafFolderIncludeFileFolderArray += $LeafFolder
+                                    }
+                                }
+                                
+                                if ($LeafFolderIncludeFileFolderArray.Count -gt 0)
+                                {
+                                    [array]$SourceFolderArray = $LeafFolderIncludeFileFolderArray
+                                }
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        [array]$SourceFolderArray += $FolderItem
+                    }
                 }
             }
         
@@ -563,8 +632,6 @@ function Get-InputJsonFileData {
         
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('SplitGroupOnSourceFolder', [System.Convert]::ToBoolean($GroupNameObject.SplitGroupOnSourceFolder))
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('IncludeSubdirectories', [System.Convert]::ToBoolean($GroupNameObject.IncludeSubdirectories))
-        $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('IncludeRecurseSubdirectoriesTagFile', [string]$GroupNameObject.IncludeRecurseSubdirectoriesTagFile)
-        $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('ExcludeRecurseSubdirectoriesTagFile', [string]$GroupNameObject.ExcludeRecurseSubdirectoriesTagFile)
         
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('AlphaNumeric', [System.Convert]::ToBoolean($GroupNameObject.AlphaNumeric))
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('RandomSequence', [System.Convert]::ToBoolean($GroupNameObject.RandomSequence))
@@ -728,16 +795,16 @@ function Get-SourceFileList {
             if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.IncludeSubdirectories)  
             {
                 # Include recursed SourceFolder directories with IncludeRecurseSubdirectoriesTagFile, then exclude recursed SourceFolder directories with ExcludeRecurseSubdirectoriesTagFile
-                if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.IncludeRecurseSubdirectoriesTagFile -or $DataHashtable.WallpaperLayoutWeightedList.$GroupName.ExcludeRecurseSubdirectoriesTagFile)
+                if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile -or $DataHashtable.ExcludeRecurseSubdirectoriesTagFile)
                 {
-                    if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.IncludeRecurseSubdirectoriesTagFile)
+                    if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile)
                     {
-                        $IncludeRecurseSubdirectoriesTagFileDirectories = [array]((Get-ChildItem -Path "$SourceFolder\*" -Include $DataHashtable.WallpaperLayoutWeightedList.$GroupName.IncludeRecurseSubdirectoriesTagFile -Recurse).DirectoryName | Select-Object -Unique)
+                        $IncludeRecurseSubdirectoriesTagFileDirectories = [array]((Get-ChildItem -Path "$SourceFolder\*" -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse).DirectoryName | Select-Object -Unique)
                     }
                     
-                    if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.ExcludeRecurseSubdirectoriesTagFile)
+                    if ($DataHashtable.ExcludeRecurseSubdirectoriesTagFile)
                     {
-                        $ExcludeRecurseSubdirectoriesTagFileDirectories = [array]((Get-ChildItem -Path "$SourceFolder\*" -Include $DataHashtable.WallpaperLayoutWeightedList.$GroupName.ExcludeRecurseSubdirectoriesTagFile -Recurse).DirectoryName | Select-Object -Unique)
+                        $ExcludeRecurseSubdirectoriesTagFileDirectories = [array]((Get-ChildItem -Path "$SourceFolder\*" -Include $DataHashtable.ExcludeRecurseSubdirectoriesTagFile -Recurse).DirectoryName | Select-Object -Unique)
                     }
 
                     # All directories with Pictures

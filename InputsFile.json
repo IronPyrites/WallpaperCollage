@@ -3,6 +3,8 @@
     "TimeBetweenCreation": 58,
     "NumberThreads": 6,
     "AutoMultiThread": false,
+    "IncludeRecurseSubdirectoriesTagFile": "WP.include",
+    "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
     "PauseOnProcess": ["powerpnt","steam"],
     "SourceFolderGroups":
     [
@@ -11,7 +13,7 @@
             "Description": "Default folder, this folder should be a local disk and online at all times",
             "SourceFolders": 
             [
-                {"Folder": "C:\\LocalDriveFolder\\Pictures\\", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+                {"Folder": "C:\\LocalDriveFolder\\Pictures\\", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -19,9 +21,9 @@
             "Description": "Mixed Portrait and Landscape images",
             "SourceFolders": 
             [
-                {"Folder": "D:\\Pictures\\Vacations\\March-14-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "D:\\Pictures\\Vacations\\March-15-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "D:\\Pictures\\Vacations\\March-16-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+                {"Folder": "D:\\Pictures\\Vacations\\March-14-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true},
+                {"Folder": "D:\\Pictures\\Vacations\\March-15-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true},
+                {"Folder": "D:\\Pictures\\Vacations\\March-16-2020", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true}
             ]
         },
         {
@@ -29,9 +31,9 @@
             "Description": "More Mixed Portrait and Landscape images",
             "SourceFolders": 
             [
-                {"Folder": "E:\\Pictures\\Art\\VincentvanGogh", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": true},
-                {"Folder": "E:\\Pictures\\Art\\PaulGauguin", "Weight": 15,"ZoomPercent": 130,"RandomFlipHorizontal": true},
-                {"Folder": "E:\\Pictures\\Art\\GeorgesSeurat", "Weight": 5,"ZoomPercent": 110,"RandomFlipHorizontal": true}
+                {"Folder": "E:\\Pictures\\Art\\VincentvanGogh", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": true,"SplitOnLeafFolder": false},
+                {"Folder": "E:\\Pictures\\Art\\PaulGauguin", "Weight": 15,"ZoomPercent": 130,"RandomFlipHorizontal": true,"SplitOnLeafFolder": false},
+                {"Folder": "E:\\Pictures\\Art\\GeorgesSeurat", "Weight": 5,"ZoomPercent": 110,"RandomFlipHorizontal": true,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -39,10 +41,10 @@
             "Description": "Portrait images",
             "SourceFolders": 
             [
-                {"Folder": "F:\\Graduations\\Hillary", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "F:\\Graduations\\GeorgeW", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "F:\\Graduations\\Donald", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "F:\\Graduations\\Barack", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+                {"Folder": "F:\\Graduations\\Hillary", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "F:\\Graduations\\GeorgeW", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "F:\\Graduations\\Donald", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "F:\\Graduations\\Barack", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -50,8 +52,8 @@
             "Description": "More Portrait images",
             "SourceFolders": 
             [
-                {"Folder": "D:\\Weddings\\JackAndJill", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "D:\\Weddings\\DonaldAndHillary", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+                {"Folder": "D:\\Weddings\\JackAndJill", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true},
+                {"Folder": "D:\\Weddings\\DonaldAndHillary", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true}
             ]
         },
         {
@@ -59,8 +61,8 @@
             "Description": "Narrow Portrait cellphone images",
             "SourceFolders": 
             [
-                {"Folder": "E:\\iPhone\\iCloudLocal", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "E:\\Android\\GingerBread", "Weight": 1,"ZoomPercent": 120,"RandomFlipHorizontal": false}
+                {"Folder": "E:\\iPhone\\iCloudLocal", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "E:\\Android\\GingerBread", "Weight": 1,"ZoomPercent": 120,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -68,11 +70,11 @@
             "Description": "Landscape images",
             "SourceFolders": 
             [
-                {"Folder": "X:\\Photography\\YellowStone", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "X:\\Photography\\Olympic", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "X:\\Photography\\Carlsbad", "Weight": 10,"ZoomPercent": 130,"RandomFlipHorizontal": false},
-                {"Folder": "X:\\Photography\\Yosemite", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "X:\\Photography\\Glacier", "Weight": 10,"ZoomPercent": 150,"RandomFlipHorizontal": false}
+                {"Folder": "X:\\Photography\\YellowStone", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "X:\\Photography\\Olympic", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "X:\\Photography\\Carlsbad", "Weight": 10,"ZoomPercent": 130,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "X:\\Photography\\Yosemite", "Weight": 10,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "X:\\Photography\\Glacier", "Weight": 10,"ZoomPercent": 150,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -80,8 +82,8 @@
             "Description": "Magazine aspect ratio Portrait images",
             "SourceFolders": 
             [
-                {"Folder": "D:\\NationalGeographic\\1969_Dec", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false},
-                {"Folder": "D:\\NationalGeographic\\1970_Jan", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false}
+                {"Folder": "D:\\NationalGeographic\\1969_Dec", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "D:\\NationalGeographic\\1970_Jan", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         }
     ],
@@ -126,8 +128,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": false,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -144,8 +144,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -162,8 +160,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -180,8 +176,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -198,8 +192,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -216,8 +208,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -234,8 +224,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -252,8 +240,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -270,8 +256,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -288,8 +272,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -306,8 +288,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -324,8 +304,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
@@ -342,8 +320,6 @@
             "SplitGroupOnSourceFolderGroupSets": true,
             "SplitGroupOnSourceFolder": true,
             "IncludeSubdirectories": true,
-            "IncludeRecurseSubdirectoriesTagFile": "WP.include",
-            "ExcludeRecurseSubdirectoriesTagFile": "WP.exclude",
             "ZoomPercent": 100,
             "RandomFlipHorizontal": false,
             "AlphaNumeric": false,
