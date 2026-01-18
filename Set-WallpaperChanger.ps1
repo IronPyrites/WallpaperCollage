@@ -5,7 +5,7 @@ Creates Wallpaper collage files using combinations of Landscape and Portrait ima
 All parameters are stored in InputsFile.json.  Updates to InputsFile.json are implemented immediately, without the need to restart the script.
 
 Author:   Dustin Fraser
-Version:  20251207
+Version:  20260118
 
 
 .DESCRIPTION
