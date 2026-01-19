@@ -133,7 +133,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -149,7 +149,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -165,7 +165,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -181,7 +181,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -197,7 +197,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -213,7 +213,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -229,12 +229,12 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
-            "GroupName": "Portrait_3_Elements_Base3_Even",
-            "WallpaperLayout": "Portrait_3_Elements_Base3_Even",
+            "GroupName": "Portrait_4_Elements_Base3_Even",
+            "WallpaperLayout": "Portrait_4_Elements_Base3_Even",
             "Weight": 1,
             "SourceFolderGroupSets": [],
             "SplitGroupOnSourceFolderGroupSets": true,
@@ -245,7 +245,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -261,7 +261,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -277,7 +277,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -293,7 +293,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -309,7 +309,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         },
         {
@@ -325,7 +325,7 @@
             "AlphaNumeric": false,
             "RandomSequence": false,
             "Portrait_Landscape_SurplusBurnoff": true,
-            "SurplusCandidate_Portrait": ["Portrait_3_Elements_Base3_Even"],
+            "SurplusCandidate_Portrait": ["Portrait_4_Elements_Base3_Even"],
             "SurplusCandidate_Landscape": ["Landscape_2_Elements_Thirds"]
         }
     ]

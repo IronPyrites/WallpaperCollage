@@ -238,7 +238,7 @@ $WallpaperLayoutCountHash.'Landscape_3_Elements_Base3' = 6
 $WallpaperLayoutCountHash.'Portrait_1_2x2_3x3' = 6
 $WallpaperLayoutCountHash.'Portrait_2_NarrowThirds' = 4
 $WallpaperLayoutCountHash.'Portrait_3_Elements_Base3_Narrow' = 6
-$WallpaperLayoutCountHash.'Portrait_3_Elements_Base3_Even' = 6
+$WallpaperLayoutCountHash.'Portrait_4_Elements_Base3_Even' = 6
 $WallpaperLayoutCountHash.'Mixed_1_6xElements_Base6Thirds_15Px6L' = 4
 $WallpaperLayoutCountHash.'Mixed_2_Thirds' = 4
 $WallpaperLayoutCountHash.'Mixed_3_Element_Base3' = 6
@@ -675,7 +675,7 @@ function Get-InputJsonFileData {
     Get-WallpaperLayoutWeightedState -DataHashtable $DataHashtable
     
     # MaxLayouts will determine the number of Wallpaper image files
-    if ($DataHashtable.NumberThreads -gt 1)
+    if (($DataHashtable.NumberThreads -gt 1) -and ($PSVersionTable.PSVersion.Major -ge 7))
     {
         $DataHashtable.MaxLayouts = $DataHashtable.NumberThreads
     }
@@ -1234,6 +1234,19 @@ function Set-SubImageObject {
 
     if ($SubImageObject.GetType().FullName -eq 'System.Drawing.Bitmap')
     {
+        # System.Drawing.Graphics does not support Indexed color PixelFormats, images using them will need to be converted to RGB
+        if ($SubImageObject.PixelFormat -like "*Indexed")
+        {
+            $RgbSubImageObject = New-Object System.Drawing.Bitmap -ArgumentList $SubImageObject.Width, $SubImageObject.Height, Format32bppRgb
+
+            $RgbNonIndexedImage = [System.Drawing.Graphics]::FromImage($RgbSubImageObject)
+            $RgbNonIndexedImage.DrawImage($SubImageObject, 0, 0, $SubImageObject.Width, $SubImageObject.Height)
+
+            $SubImageObject = $RgbSubImageObject.Clone()
+
+            $RgbNonIndexedImage.Dispose()
+        }
+        
         # Some Pictures have embedded EXIF data for rotate and flip, interpretted by Windows, but not immediately interpretted by System.Drawing.Bitmap
         $SubImageObject = Set-RotateFlipFromEXIF -SubImageObject $SubImageObject
 
@@ -2696,7 +2709,7 @@ function New-Wallpaper_Portrait_3_Elements_Base3_Narrow {
 }
 
 
-function New-Wallpaper_Portrait_3_Elements_Base3_Even {
+function New-Wallpaper_Portrait_4_Elements_Base3_Even {
     
     Param(
         [Parameter(Mandatory=$true)]
@@ -2802,7 +2815,7 @@ function New-Wallpaper_Portrait_3_Elements_Base3_Even {
     }
 
     
-    ####################  function Portrait_3_Elements_Base3_Even ####################
+    ####################  function Portrait_4_Elements_Base3_Even ####################
 
     # Derive $WallpaperLayout from the function name
     [string]$WallpaperLayout = "$($MyInvocation.MyCommand.Name)".Replace('New-Wallpaper_','')
