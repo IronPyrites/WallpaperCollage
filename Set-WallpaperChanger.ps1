@@ -368,47 +368,54 @@ function Get-InputJsonFileData {
 
                     if ($FolderItem.SplitOnLeafFolder)
                     {
-                        [array]$LeafFolders = [System.Collections.Generic.List[string]]((Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique)
-
-                        foreach ($LeafFolder in $LeafFolders)
+                        if (Test-Path -Path $FolderItem)
                         {
-                            # Do not include branch Folders
-                            if ($LeafFolders -like "$($LeafFolder)\*")
+                            [array]$LeafFolders = [System.Collections.Generic.List[string]]((Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique)
+
+                            foreach ($LeafFolder in $LeafFolders)
                             {
-                                continue
-                            }
-                            
-                            # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
-                            $FolderItemSerialized = ConvertTo-Json -InputObject $FolderItem
-                            $LeafFolderItem = ConvertFrom-Json -InputObject $FolderItemSerialized
-                            
-                            $LeafFolderItem.Folder = $LeafFolder
-                            
-                            [array]$SourceFolderArray += $LeafFolderItem
-                        }
-
-                        if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile)
-                        {
-                            # If one (1) or more LeafFolders contain IncludeRecurseSubdirectoriesTagFile, only include folders with IncludeRecurseSubdirectoriesTagFile; 
-                            # else, include all LeafFolders as the default
-
-                            if (Get-ChildItem -Path $FolderItem.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
-                            {
-                                $LeafFolderIncludeFileFolderArray = @()
-
-                                foreach ($LeafFolder in $SourceFolderArray)
+                                # Do not include branch Folders
+                                if ($LeafFolders -like "$($LeafFolder)\*")
                                 {
-                                    if (Get-ChildItem -Path $LeafFolder.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
+                                    continue
+                                }
+                            
+                                # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
+                                $FolderItemSerialized = ConvertTo-Json -InputObject $FolderItem
+                                $LeafFolderItem = ConvertFrom-Json -InputObject $FolderItemSerialized
+                            
+                                $LeafFolderItem.Folder = $LeafFolder
+                            
+                                [array]$SourceFolderArray += $LeafFolderItem
+                            }
+
+                            if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile)
+                            {
+                                # If one (1) or more LeafFolders contain IncludeRecurseSubdirectoriesTagFile, only include folders with IncludeRecurseSubdirectoriesTagFile; 
+                                # else, include all LeafFolders as the default
+
+                                if (Get-ChildItem -Path $FolderItem.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
+                                {
+                                    $LeafFolderIncludeFileFolderArray = @()
+
+                                    foreach ($LeafFolder in $SourceFolderArray)
                                     {
-                                        [array]$LeafFolderIncludeFileFolderArray += $LeafFolder
+                                        if (Get-ChildItem -Path $LeafFolder.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
+                                        {
+                                            [array]$LeafFolderIncludeFileFolderArray += $LeafFolder
+                                        }
+                                    }
+                                
+                                    if ($LeafFolderIncludeFileFolderArray.Count -gt 0)
+                                    {
+                                        [array]$SourceFolderArray = $LeafFolderIncludeFileFolderArray
                                     }
                                 }
-                                
-                                if ($LeafFolderIncludeFileFolderArray.Count -gt 0)
-                                {
-                                    [array]$SourceFolderArray = $LeafFolderIncludeFileFolderArray
-                                }
                             }
+                        }
+                        else
+                        {
+                            [array]$SourceFolderArray += $FolderItem
                         }
                     }
                     else 
@@ -3929,7 +3936,9 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
             $DataHashtable.PictureNameOverride = 0
             $DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts
         }
-        else  # Start new LayoutTracker sequence
+        else
+        # Start new LayoutTracker sequence
+        # LayoutTracker is only used for the Default, and will increment through the Default WallpaperLayout variations numberically rather than at random
         {
             $DataHashtable.LayoutTracker = 1
             $DataHashtable.PictureNameOverride = 0
@@ -3978,6 +3987,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
 
                 if ($SourceFolderOfflineStateChange)
                 {
+                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtabl
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
 
                     $DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts
@@ -4058,6 +4068,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
                 {
                     if (-not $Thread) {$DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts}
                     
+                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
                 }
                 
