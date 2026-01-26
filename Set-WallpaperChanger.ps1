@@ -5,7 +5,7 @@ Creates Wallpaper collage files using combinations of Landscape and Portrait ima
 All parameters are stored in InputsFile.json.  Updates to InputsFile.json are implemented immediately, without the need to restart the script.
 
 Author:   Dustin Fraser
-Version:  20260118
+Version:  20260125
 
 
 .DESCRIPTION
@@ -341,6 +341,8 @@ function Get-InputJsonFileData {
 
     # Ingest InputsJsonFile SourceFolderGroups
     $SourceFolderGroupsJsonHashtable = @{}
+    $DataHashtable.SplitOnLeafFolder = $false
+    
     foreach ($SourceFolderGroupItem in $SourceFolderGroupsObject)
     {
         if ($SourceFolderGroupsJsonHashtable.([Int32]$SourceFolderGroupItem.SourceFolderGroup))
@@ -368,6 +370,8 @@ function Get-InputJsonFileData {
 
                     if ($FolderItem.SplitOnLeafFolder)
                     {
+                        $DataHashtable.SplitOnLeafFolder = $true
+
                         if (Test-Path -Path $FolderItem)
                         {
                             [array]$LeafFolders = [System.Collections.Generic.List[string]]((Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique)
@@ -3987,7 +3991,9 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
 
                 if ($SourceFolderOfflineStateChange)
                 {
-                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtabl
+                    # Onlined SplitOnLeafFolder SourceFolders will need to be enumerated before rebuilding the SourceFileList
+                    if ($DataHashtable.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
+                    
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
 
                     $DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts
@@ -4068,7 +4074,9 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
                 {
                     if (-not $Thread) {$DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts}
                     
-                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
+                    # Onlined SplitOnLeafFolder SourceFolders will need to be enumerated before rebuilding the SourceFileList
+                    if ($DataHashtable.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
+                    
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
                 }
                 
