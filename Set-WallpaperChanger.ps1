@@ -379,9 +379,6 @@ function Get-InputJsonFileData {
                     # Split SourceFolders with SplitOnLeafFolder=$true into LeafFolders
                     if ($FolderItem.SplitOnLeafFolder)  
                     {
-                        # If there are no SourceFolders with SplitOnLeafFolder=$true, we will only rebuild SourceFolder file lists rather than rebuilding $DataHashtable when source folders come online
-                        $DataHashtable.SplitOnLeafFolder = $true
-
                         if (Test-Path -Path $FolderItem.Folder)
                         {
                             [array]$LeafFolders = (Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique
@@ -4030,8 +4027,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
 
                 if ($SourceFolderOfflineStateChange)
                 {
-                    # Onlined SplitOnLeafFolder SourceFolders will need to be enumerated before rebuilding the SourceFileList
-                    if ($DataHashtable.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
+                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
                     
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
 
@@ -4113,8 +4109,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
                 {
                     if (-not $Thread) {$DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts}
                     
-                    # Onlined SplitOnLeafFolder SourceFolders will need to be enumerated before rebuilding the SourceFileList
-                    if ($DataHashtable.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
+                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
                     
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
                 }
