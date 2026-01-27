@@ -89,7 +89,7 @@ InputsFile.json Parameters:
                 - See WallpaperLayoutWeightedList notes below (may be set more globally for a given GroupName)
 
             SplitOnLeafFolder
-                - !!! CAUTION !!! when using this setting [Large numbers of LeafFolders] x [SourceFolder Weight values] will take a long time to enumerate
+                - CAUTION when using this setting, a [Large numbers of LeafFolders] x [SourceFolder Weight values] will take a long time to enumerate
                   Recommendation:  If enabled, use a SourceFolder Weight of 1.
                   Enumeration will be limited to FolderEnumerationTimeLimit seconds (see above).
                 - Split a parent SoureFolder into multiple picture-containing subdirectory SourceFolders with the longest paths, i.e. "LeafFolders".
