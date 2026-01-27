@@ -1,6 +1,7 @@
 {
     "OutputFolder": "C:\\Wallpaper\\Slideshow",
     "TimeBetweenCreation": 58,
+    "FolderEnumerationTimeLimit": 60,
     "NumberThreads": 6,
     "AutoMultiThread": false,
     "IncludeRecurseSubdirectoriesTagFile": "WP.include",

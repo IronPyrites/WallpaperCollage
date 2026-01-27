@@ -36,6 +36,9 @@ InputsFile.json Parameters:
 		- Should be the same (or 1-2 less) as the Windows slideshow interval (see below).
 		- Note that large image files and complex layouts may take 60+ seconds to create.  If so, and duplicate slideshow Windows backgrounds are a regular occurrence, consider using NumberThreads (below). 
 
+    FolderEnumerationTimeLimit
+        - SourceFolder enumeration will be limited to FolderEnumerationTimeLimit seconds to prevent runtime from getting stuck in the enumeration phase; remaining SourceFolders will be truncated.
+
 	NumberThreads
         - Requires PowerShell 7 or higher:  https://github.com/PowerShell/PowerShell/releases/download/v7.5.1/PowerShell-7.5.1-win-x64.msi
 		- Number of parallel threads, each of which will update its own Wallpaper image file.
@@ -86,6 +89,9 @@ InputsFile.json Parameters:
                 - See WallpaperLayoutWeightedList notes below (may be set more globally for a given GroupName)
 
             SplitOnLeafFolder
+                - !!! CAUTION !!! when using this setting [Large numbers of LeafFolders] x [SourceFolder Weight values] will take a long time to enumerate
+                  Recommendation:  If enabled, use a SourceFolder Weight of 1.
+                  Enumeration will be limited to FolderEnumerationTimeLimit seconds (see above).
                 - Split a parent SoureFolder into multiple picture-containing subdirectory SourceFolders with the longest paths, i.e. "LeafFolders".
                 - This setting is intended to create WallpaperImage files based on a single folder, rather than on an entire directory and subdirectory tree.
                 - Picture files contained within branch directories (upstream of longest-path picture-containing subdirectories) will not be included.
@@ -318,6 +324,7 @@ function Get-InputJsonFileData {
     }
     
     [Int32]$DataHashtable.TimeBetweenCreation = $InputsJsonObject.TimeBetweenCreation
+    [Int32]$DataHashtable.FolderEnumerationTimeLimit = $InputsJsonObject.FolderEnumerationTimeLimit
     [array]$DataHashtable.PauseOnProcess = $InputsJsonObject.PauseOnProcess
     [string]$DataHashtable.IncludeRecurseSubdirectoriesTagFile = $InputsJsonObject.IncludeRecurseSubdirectoriesTagFile
     [string]$DataHashtable.ExcludeRecurseSubdirectoriesTagFile = $InputsJsonObject.ExcludeRecurseSubdirectoriesTagFile
@@ -357,7 +364,8 @@ function Get-InputJsonFileData {
             if ($SourceFolderGroupItem.SourceFolders.Count -le 0) {continue}
             if (($SourceFolderGroupItem.SourceFolders.Weight | measure -Maximum).Maximum -le 0) {continue}
             
-            $SourceFolderArray = @()
+            $SourceFolderArray = [System.Collections.Generic.List[[PSCustomObject]]]@()
+            
             foreach ($FolderItem in $SourceFolderGroupItem.SourceFolders)
             {
                 if ($FolderItem.Folder)
@@ -368,29 +376,40 @@ function Get-InputJsonFileData {
                         $FolderItem.Folder = $FolderItem.Folder.Substring(0, $FolderItem.Folder.Length - 1)
                     }
 
-                    if ($FolderItem.SplitOnLeafFolder)
+                    # Split SourceFolders with SplitOnLeafFolder=$true into LeafFolders
+                    if ($FolderItem.SplitOnLeafFolder)  
                     {
+                        # If there are no SourceFolders with SplitOnLeafFolder=$true, we will only rebuild SourceFolder file lists rather than rebuilding $DataHashtable when source folders come online
                         $DataHashtable.SplitOnLeafFolder = $true
 
-                        if (Test-Path -Path $FolderItem)
+                        if (Test-Path -Path $FolderItem.Folder)
                         {
-                            [array]$LeafFolders = [System.Collections.Generic.List[string]]((Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique)
+                            [array]$LeafFolders = (Get-ChildItem -Path "$($FolderItem.Folder)\*" -Include *.BMP, *.GIF, *.EXIF, *.JPG, *.JPEG, *.PNG, *.TIFF -Recurse).DirectoryName | Select-Object -Unique
 
-                            foreach ($LeafFolder in $LeafFolders)
+                            if ($LeafFolders.Count -gt 0)
                             {
-                                # Do not include branch Folders
-                                if ($LeafFolders -like "$($LeafFolder)\*")
+                                foreach ($LeafFolder in $LeafFolders)
                                 {
-                                    continue
+                                    # Do not include branch Folders
+                                    if ($LeafFolders -like "$($LeafFolder)\*")
+                                    {
+                                        continue
+                                    }
+                            
+                                    # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
+                                    $FolderItemSerialized = ConvertTo-Json -InputObject $FolderItem
+                                    $LeafFolderItem = ConvertFrom-Json -InputObject $FolderItemSerialized
+                            
+                                    $LeafFolderItem.Folder = $LeafFolder
+                            
+                                    $SourceFolderArray.Add($LeafFolderItem)
                                 }
-                            
-                                # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
-                                $FolderItemSerialized = ConvertTo-Json -InputObject $FolderItem
-                                $LeafFolderItem = ConvertFrom-Json -InputObject $FolderItemSerialized
-                            
-                                $LeafFolderItem.Folder = $LeafFolder
-                            
-                                [array]$SourceFolderArray += $LeafFolderItem
+                            }
+                            else
+                            {
+                                $SourceFolderArray.Add($FolderItem)
+
+                                continue
                             }
 
                             if ($DataHashtable.IncludeRecurseSubdirectoriesTagFile)
@@ -400,38 +419,51 @@ function Get-InputJsonFileData {
 
                                 if (Get-ChildItem -Path $FolderItem.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
                                 {
-                                    $LeafFolderIncludeFileFolderArray = @()
+                                    $LeafFolderIncludeFileFolderArray = [System.Collections.Generic.List[[PSCustomObject]]]@()
 
                                     foreach ($LeafFolder in $SourceFolderArray)
                                     {
                                         if (Get-ChildItem -Path $LeafFolder.Folder -Include $DataHashtable.IncludeRecurseSubdirectoriesTagFile -Recurse)
                                         {
-                                            [array]$LeafFolderIncludeFileFolderArray += $LeafFolder
+                                            $LeafFolderIncludeFileFolderArray.Add($LeafFolder)
                                         }
                                     }
-                                
-                                    if ($LeafFolderIncludeFileFolderArray.Count -gt 0)
+
+                                    $SourceFolderArray = $LeafFolderIncludeFileFolderArray
+                                }
+                            }
+
+                            if ($DataHashtable.ExcludeRecurseSubdirectoriesTagFile)
+                            {
+                                # Exclude LeafFolders which contain ExcludeRecurseSubdirectoriesTagFile
+
+                                if (Get-ChildItem -Path $FolderItem.Folder -Include $DataHashtable.ExcludeRecurseSubdirectoriesTagFile -Recurse)
+                                {
+                                    foreach ($LeafFolder in $SourceFolderArray)
                                     {
-                                        [array]$SourceFolderArray = $LeafFolderIncludeFileFolderArray
+                                        if (Get-ChildItem -Path $LeafFolder.Folder -Include $DataHashtable.ExcludeRecurseSubdirectoriesTagFile -Recurse)
+                                        {
+                                            $SourceFolderArray = $SourceFolderArray | Where-Object {$_.Folder -ne $LeafFolder.Folder}
+                                        }
                                     }
                                 }
                             }
                         }
-                        else
+                        else  # SourceFolder is offline, LeafFolders cannot be enumerated; add SourceFolder for online/offline state monitoring
                         {
-                            [array]$SourceFolderArray += $FolderItem
+                            $SourceFolderArray.Add($FolderItem)
                         }
                     }
-                    else 
+                    else  # $SplitOnLeafFolder=$false
                     {
-                        [array]$SourceFolderArray += $FolderItem
+                        $SourceFolderArray.Add($FolderItem)
                     }
                 }
             }
         
             if ($SourceFolderArray.Count -gt 0)
             {
-                $SourceFolderGroupsJsonHashtable.Add([Int32]$SourceFolderGroupItem.SourceFolderGroup, $SourceFolderArray)
+                $SourceFolderGroupsJsonHashtable.Add([Int32]$SourceFolderGroupItem.SourceFolderGroup, [array]$SourceFolderArray)
             }
         }
     }
@@ -535,9 +567,12 @@ function Get-InputJsonFileData {
     }
     $SourceFolderGroupSetsObject = $SourceFolderGroupSetsObjectCopy.Clone()
 
+    if ($StopwatchInputJsonFileData) {$StopwatchInputJsonFileData.Restart()}
+    else {$StopwatchInputJsonFileData = [System.Diagnostics.Stopwatch]::StartNew()}
+
     # Handle SplitGroupOnSourceFolder for WallpaperLayoutWeightedList
     $WallpaperLayoutWeightedListObjectCopy = $WallpaperLayoutWeightedListObject.Clone()
-    foreach ($GroupNameObject in $WallpaperLayoutWeightedListObject)
+    :WallpaperLayoutWeightedListObject foreach ($GroupNameObject in $WallpaperLayoutWeightedListObject)
     {
         if ($GroupNameObject.GroupName -eq 'Default') {continue}  # The "Default" GroupName will always be preserved, and will therefore never be allowed to split
 
@@ -556,6 +591,8 @@ function Get-InputJsonFileData {
                 # Create a new 1:1 pair of SourceFolderGroup and SourceFolderGroupSet, and assign SourceFolderGroupSet to a new SplitGroupOnSourceFolder GroupName
                 foreach ($SourceFolderObject in $SourceFolderObjectArray)
                 {
+                    if ([int32]([math]::Round($StopwatchInputJsonFileData.Elapsed.TotalSeconds)) -gt [int32]$DataHashtable.FolderEnumerationTimeLimit) {break WallpaperLayoutWeightedListObject}
+                    
                     # PSCustomObject does not support Clone(), serializing and deserializing to break object linkings
                     $SourceFolderSerialized = ConvertTo-Json -InputObject $SourceFolderObject
                     $SourceFolderDeserialized = ConvertFrom-Json -InputObject $SourceFolderSerialized
@@ -594,6 +631,8 @@ function Get-InputJsonFileData {
         }
     }
     $WallpaperLayoutWeightedListObject = $WallpaperLayoutWeightedListObjectCopy.Clone()
+
+    $StopwatchInputJsonFileData.Stop()
 
     # Ingest InputsJsonFile SourceFolderGroupSets
     $SourceFolderGroupJsonHashtable = @{}
