@@ -348,8 +348,6 @@ function Get-InputJsonFileData {
 
     # Ingest InputsJsonFile SourceFolderGroups
     $SourceFolderGroupsJsonHashtable = @{}
-    $DataHashtable.SplitOnLeafFolder = $false
-    
     foreach ($SourceFolderGroupItem in $SourceFolderGroupsObject)
     {
         if ($SourceFolderGroupsJsonHashtable.([Int32]$SourceFolderGroupItem.SourceFolderGroup))
