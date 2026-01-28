@@ -131,9 +131,10 @@ InputsFile.json Parameters:
 			- Not applicable to the "Default" GroupName.
 			
 		SplitGroupOnSourceFolder
-			- If SplitGroupOnSourceFolder = True (recommended)
+			- If SplitGroupOnSourceFolder = True (recommended).
 				- Auto-create new GroupNames so that each Wallpaper image does not contain a mix of Folders within a SourceFolders list.
 				- Enables per Folder overrides of Weight, ZoomPercent, and RandomFlipHorizontal.
+            - NOTE:  SourceFolder override settings (Weight, ZoomPercent, RandomFlipHorizontal, SplitOnLeafFolder) will be ignored unless SplitGroupOnSourceFolder = True
 
 		IncludeSubdirectories - Also include image files from all subdirectories (subfolders) of a given SourceFolder.
 
@@ -611,6 +612,7 @@ function Get-InputJsonFileData {
 
                         if ($SourceFolderDeserialized.ZoomPercent) {$GroupDeserialized.ZoomPercent = [Int32]$SourceFolderDeserialized.ZoomPercent}
                         if ($SourceFolderDeserialized.RandomFlipHorizontal) {$GroupDeserialized.RandomFlipHorizontal = [System.Convert]::ToBoolean($SourceFolderDeserialized.RandomFlipHorizontal)}
+                        if ($SourceFolderDeserialized.SplitOnLeafFolder) {$GroupDeserialized.SplitOnLeafFolder = [System.Convert]::ToBoolean($SourceFolderDeserialized.SplitOnLeafFolder)}
 
                         # String type supports Clone(), Int32 does not
                         $GroupDeserialized.SourceFolderGroupSets = [array]([Int32](([string]$NewSourceFolderGroupSetNumber).Clone()))
@@ -684,6 +686,7 @@ function Get-InputJsonFileData {
                 
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('ZoomPercent', [Int32]$GroupNameObject.ZoomPercent)
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('RandomFlipHorizontal', [System.Convert]::ToBoolean($GroupNameObject.RandomFlipHorizontal))
+        $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('SplitOnLeafFolder', [System.Convert]::ToBoolean($GroupNameObject.SplitOnLeafFolder))
         
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('Portrait_Landscape_SurplusBurnoff', [System.Convert]::ToBoolean($GroupNameObject.Portrait_Landscape_SurplusBurnoff))
         $DataHashtable.WallpaperLayoutWeightedList.$($GroupNameObject.GroupName).Add('SurplusCandidate_Portrait', [array]$GroupNameObject.SurplusCandidate_Portrait)
@@ -4026,8 +4029,8 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
                 if ($SourceFolderOfflineStateChange)
                 {
                     $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
-                    
-                    Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
+
+                    if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
 
                     $DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts
                 }
@@ -4040,7 +4043,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
             }
         }
         While (-not ($DataHashtable.WallpaperLayoutWeightedListEnableState -and $DataHashtable.WeightedWallpaperSourceFoldersOnlineState) -and ($DataHashtable.DefaultFolderEnableState -and $DataHashtable.DefaultSourceFoldersOnlineState))
-        # continue to InfiniteWallpaperLoop
+        # Continue to InfiniteWallpaperLoop
     }
     ##### Randomized selection of Weighted WallpaperLayouts, $WallpaperLayoutWeightedListEnableState = $true and $WeightedWallpaperSourceFoldersOnlineState = $true
     elseif ($DataHashtable.WallpaperLayoutWeightedListEnableState -and $DataHashtable.WeightedWallpaperSourceFoldersOnlineState)
@@ -4106,8 +4109,8 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
                 if ($SourceFolderOfflineStateChange)
                 {
                     if (-not $Thread) {$DataHashtable.OutputFolderFastRefresh = $DataHashtable.MaxLayouts}
-                    
-                    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
+
+                    if ($DataHashtable.WallpaperLayoutWeightedList.$GroupName.SplitOnLeafFolder) {$DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable}
                     
                     Get-SourceFileList -DataHashtable $DataHashtable -GroupName $GroupName
                 }
@@ -4127,7 +4130,7 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
             Set-WallpaperWeightedLayoutList -DataHashtable $DataHashtable
         } 
         While ($DataHashtable.WallpaperLayoutWeightedListEnableState -and $DataHashtable.WeightedWallpaperSourceFoldersOnlineState)
-        # continue to InfiniteWallpaperLoop
+        # Continue to InfiniteWallpaperLoop
     }
     else
     {
@@ -4135,6 +4138,8 @@ if (-not (Test-Path -Path $DataHashtable.OutputFolder))
 
         sleep -Seconds 5
     }
+    
+    $DataHashtable = Get-InputJsonFileData -DataHashtable $DataHashtable
     # continue to InfiniteWallpaperLoop
 }
 While ($true)
