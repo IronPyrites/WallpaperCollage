@@ -1,4 +1,4 @@
-1.  Copy this simplified InputsFile.json file to C:\Wallpaper (create C:\Wallpaper as needed).
+1.  Copy this simplified InputsFile.json file to C:\Wallpaper.
 
 2.  Copy Set-WallpaperChanger.ps1 from https://github.com/IronPyrites/WallpaperCollage to your local C:\Wallpaper folder.
 
@@ -13,8 +13,15 @@
 4.  Open a PowerShell window:  
       Windows [Start] -> PowerShell
 
-5.  Within PowerShell, navigate to C:\Wallpaper, and run the following:
+5.  Update PowerShell Execution Policy
+      5.1  Start -> Windows PowerShell ([right click] -> "Runas Administrator")
+      5.2  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+      5.3  Select "A - Yes to all"
+
+6.  Within PowerShell, navigate to C:\Wallpaper, and run the following:
       
       .\Set-WallpaperChanger.ps1 -InputsJsonFile C:\Wallpaper\InputsFile.json
 
     !!! NOTE:  Use the FULL PATH for InputsFile.json, e.g. C:\Wallpaper\InputsFile.json, NOT .\InputsFile.json
+
+7.  See _QuickStartGuide.md steps 6 and 7 for setting Windows to use OutputFolder (above) as the slideshow location.
