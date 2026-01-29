@@ -369,10 +369,15 @@ function Get-InputJsonFileData {
             {
                 if ($FolderItem.Folder)
                 {
-                    # Remove any final backslash "\" characters from folder names
+                    # Remove any final "\" or "\\" characters from folder names
                     if ($FolderItem.Folder.Remove(0, ($FolderItem.Folder.Length - 1)) -eq '\')
                     {
                         $FolderItem.Folder = $FolderItem.Folder.Substring(0, $FolderItem.Folder.Length - 1)
+
+                        if ($FolderItem.Folder.Remove(0, ($FolderItem.Folder.Length - 1)) -eq '\')
+                        {
+                            $FolderItem.Folder = $FolderItem.Folder.Substring(0, $FolderItem.Folder.Length - 1)
+                        }
                     }
 
                     # Split SourceFolders with SplitOnLeafFolder=$true into LeafFolders
