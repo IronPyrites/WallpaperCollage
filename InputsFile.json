@@ -42,10 +42,10 @@
             "Description": "Portrait images",
             "SourceFolders": 
             [
-                {"Folder": "F:\\Graduations\\Hillary", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
-                {"Folder": "F:\\Graduations\\GeorgeW", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
-                {"Folder": "F:\\Graduations\\Donald", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
-                {"Folder": "F:\\Graduations\\Barack", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
+                {"Folder": "F:\\Graduations\\Newton", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "F:\\Graduations\\Einstein", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false},
+                {"Folder": "F:\\Graduations\\Mendeleev", "Weight": 3,"ZoomPercent": 118,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true},
+                {"Folder": "F:\\Graduations\\Curie", "Weight": 3,"ZoomPercent": 184,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
             ]
         },
         {
@@ -54,7 +54,7 @@
             "SourceFolders": 
             [
                 {"Folder": "D:\\Weddings\\JackAndJill", "Weight": 2,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true},
-                {"Folder": "D:\\Weddings\\DonaldAndHillary", "Weight": 3,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true}
+                {"Folder": "D:\\Weddings\\TomAndJerry", "Weight": 3,"ZoomPercent": 114,"RandomFlipHorizontal": false,"SplitOnLeafFolder": true}
             ]
         },
         {
