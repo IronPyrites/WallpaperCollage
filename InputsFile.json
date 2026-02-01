@@ -11,7 +11,7 @@
     [
         {
             "SourceFolderGroup": 1,
-            "Description": "Default folder, this folder should be a local disk and online at all times",
+            "Description": "Default folder, this folder should be online at all times",
             "SourceFolders": 
             [
                 {"Folder": "C:\\LocalDriveFolder\\Pictures\\", "Weight": 1,"ZoomPercent": 100,"RandomFlipHorizontal": false,"SplitOnLeafFolder": false}
